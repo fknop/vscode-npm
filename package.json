@@ -14,7 +14,8 @@
 		"onCommand:npm-script.installSavedPackages",
         "onCommand:npm-script.installPackage",
         "onCommand:npm-script.installPackageDev",
-        "onCommand:npm-script.runScript"
+        "onCommand:npm-script.runScript",
+        "onCommand:npm-script.init"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -37,6 +38,11 @@
             {
                 "command": "npm-script.runScript",
                 "title": "Run npm script",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.init",
+                "title": "Initialize npm package",
                 "category": "npm"
             }
     ]},

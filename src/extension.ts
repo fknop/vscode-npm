@@ -13,10 +13,11 @@ export function activate(context: ExtensionContext) {
         commands.registerCommand('npm-script.installSavedPackages', npmInstallSavedPackages),  
         commands.registerCommand('npm-script.installPackage', npmInstallPackage),
         commands.registerCommand('npm-script.installPackageDev', npmInstallPackageDev),
-        commands.registerCommand('npm-script.runScript', npmRunScript)
+        commands.registerCommand('npm-script.runScript', npmRunScript),
+        commands.registerCommand('npm-script.init', npmInit)
     ];
     
-	context.subscriptions.push(...disposables);
+	context.subscriptions.push(...disposables, outputChannel);
 }
 
 const readScripts = function () {
@@ -50,10 +51,129 @@ const packageExists = function () {
     if (!workspace.rootPath) {
         return false;
     }
-    
+
     const filename = Path.join(workspace.rootPath, 'package.json');
     const stat = Fs.statSync(filename);
     return stat && stat.isFile();
+};
+
+const npmInit = function () {
+  
+    if (!workspace.rootPath) {
+        window.showErrorMessage('No project open');
+        return;
+    }
+  
+    // if (packageExists()) {
+    //     window.showErrorMessage('\'package.json\' already exists');
+    //     return;
+    // }  
+    
+    const directory = Path.basename(workspace.rootPath);
+   
+    const options = {
+        name: directory,
+        version: '1.0.0',
+        description: '',
+        main: 'index.js',
+        scripts: {
+            test: 'echo "Error: no test specified" && exit 1'
+        },
+        author: '',
+        license: 'ISC'
+    };
+    
+    window.showInputBox({
+        prompt: 'Package name',
+        placeHolder: 'Package name...',
+        value: directory
+    })
+    .then((value) => {
+        
+        if (value) {
+            options.name = value.toLowerCase();
+        }
+       
+        return window.showInputBox({
+            prompt: 'Version',
+            placeHolder: '1.0.0',
+            value: '1.0.0'
+        });
+    })
+    .then((value) => {
+        
+        if (value) {
+            options.version = value;
+        }
+        
+        return window.showInputBox({
+            prompt: 'Description',
+            placeHolder: 'Package description'
+        });
+    })
+    .then((value) => {
+        
+        if (value) {
+            options.description = value;
+        }
+        
+        return window.showInputBox({
+            prompt: 'main (entry point)',
+            value: 'index.js'
+        });
+    })
+    .then((value) => {
+        
+        if (value) {
+            options.main = value;
+        }        
+        
+        return window.showInputBox({
+            prompt: 'Test script'
+        });
+    })
+    .then((value) => {
+       
+        if (value) {
+            options.scripts.test = value;
+        }
+        
+        return window.showInputBox({
+            prompt: 'Author'
+        });
+    })
+    .then((value) => {
+        
+        if (value) {
+            options.author = value;
+        }
+        
+        return window.showInputBox({
+            prompt: 'License',
+            value: 'ISC'
+        });
+    })
+    .then((value) => {
+        
+        if (value) {
+            options.license = value;
+        }
+        
+        const packageJson = JSON.stringify(options, null, 4);
+        const path = Path.join(workspace.rootPath, 'package.json');
+        Fs.writeFile(path, packageJson, (err) => {
+            
+            if (err) {
+                window.showErrorMessage('Cannot write \'package.json\'');    
+            }
+            else {
+                window.showInformationMessage('\'package.json\' created successfuly');
+                workspace.openTextDocument(path).then((document) => {
+                    window.showTextDocument(document);
+                });
+            }
+        })
+    });
 };
 
 const npmRunScript = function () {
@@ -102,6 +222,11 @@ const _installPackage = function (dev) {
         placeHolder: 'lodash, underscore, ...'
     })
     .then(value => {
+        
+        if (!value) {
+            window.showErrorMessage('No value entered');
+            return;
+        }
         
         const packages = value.split(' ');
         
