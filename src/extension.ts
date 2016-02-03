@@ -2,19 +2,22 @@ import * as Cp from 'child_process';
 import * as Path from 'path';
 import * as Fs from 'fs';
 
-import { window, commands, workspace, OutputChannel, ExtensionContext, ViewColumn } from 'vscode';
+import { window as Window, 
+         commands as Commands, 
+         workspace as Workspace, 
+         OutputChannel, ExtensionContext, ViewColumn } from 'vscode';
 
 
-const outputChannel: OutputChannel = window.createOutputChannel('npm');
+const outputChannel: OutputChannel = Window.createOutputChannel('npm');
 
-export function activate(context: ExtensionContext) {
+export const activate = function (context: ExtensionContext) {
 
     const disposables = [
-        commands.registerCommand('npm-script.installSavedPackages', npmInstallSavedPackages),  
-        commands.registerCommand('npm-script.installPackage', npmInstallPackage),
-        commands.registerCommand('npm-script.installPackageDev', npmInstallPackageDev),
-        commands.registerCommand('npm-script.runScript', npmRunScript),
-        commands.registerCommand('npm-script.init', npmInit)    
+        Commands.registerCommand('npm-script.installSavedPackages', npmInstallSavedPackages),  
+        Commands.registerCommand('npm-script.installPackage', npmInstallPackage),
+        Commands.registerCommand('npm-script.installPackageDev', npmInstallPackageDev),
+        Commands.registerCommand('npm-script.runScript', npmRunScript),
+        Commands.registerCommand('npm-script.init', npmInit)    
     ];
     
 	context.subscriptions.push(...disposables, outputChannel);
@@ -22,7 +25,7 @@ export function activate(context: ExtensionContext) {
 
 const readScripts = function () {
   
-    const filename = Path.join(workspace.rootPath, 'package.json');
+    const filename = Path.join(Workspace.rootPath, 'package.json');
     try {
         const content = Fs.readFileSync(filename).toString();
         const json = JSON.parse(content);
@@ -31,7 +34,7 @@ const readScripts = function () {
             return json.scripts;
         }
         
-        window.showInformationMessage('No scripts are defined in \'package.json\'');
+        Window.showInformationMessage('No scripts are defined in \'package.json\'');
         return null;
     }
     catch (ignored) {
@@ -42,18 +45,18 @@ const readScripts = function () {
 
 const showNoPackage = function () {
   
-    window.showErrorMessage('Cannot read \'package.json\'');  
+    Window.showErrorMessage('Cannot read \'package.json\'');  
 };
 
 
 const packageExists = function () {
     
-    if (!workspace.rootPath) {
+    if (!Workspace.rootPath) {
         return false;
     }
 
     try {
-        const filename = Path.join(workspace.rootPath, 'package.json');
+        const filename = Path.join(Workspace.rootPath, 'package.json');
         const stat = Fs.statSync(filename);
         return stat && stat.isFile();
     }
@@ -64,17 +67,17 @@ const packageExists = function () {
 
 const npmInit = function () {
   
-    if (!workspace.rootPath) {
-        window.showErrorMessage('No project open');
+    if (!Workspace.rootPath) {
+        Window.showErrorMessage('No project open');
         return;
     }
   
     if (packageExists()) {
-        window.showErrorMessage('\'package.json\' already exists');
+        Window.showErrorMessage('\'package.json\' already exists');
         return;
     }  
     
-    const directory = Path.basename(workspace.rootPath);
+    const directory = Path.basename(Workspace.rootPath);
    
     const options = {
         name: directory,
@@ -88,7 +91,7 @@ const npmInit = function () {
         license: 'ISC'
     };
     
-    window.showInputBox({
+    Window.showInputBox({
         prompt: 'Package name',
         placeHolder: 'Package name...',
         value: directory
@@ -99,7 +102,7 @@ const npmInit = function () {
             options.name = value.toLowerCase();
         }
        
-        return window.showInputBox({
+        return Window.showInputBox({
             prompt: 'Version',
             placeHolder: '1.0.0',
             value: '1.0.0'
@@ -111,7 +114,7 @@ const npmInit = function () {
             options.version = value;
         }
         
-        return window.showInputBox({
+        return Window.showInputBox({
             prompt: 'Description',
             placeHolder: 'Package description'
         });
@@ -122,7 +125,7 @@ const npmInit = function () {
             options.description = value;
         }
         
-        return window.showInputBox({
+        return Window.showInputBox({
             prompt: 'main (entry point)',
             value: 'index.js'
         });
@@ -133,7 +136,7 @@ const npmInit = function () {
             options.main = value;
         }        
         
-        return window.showInputBox({
+        return Window.showInputBox({
             prompt: 'Test script'
         });
     })
@@ -143,7 +146,7 @@ const npmInit = function () {
             options.scripts.test = value;
         }
         
-        return window.showInputBox({
+        return Window.showInputBox({
             prompt: 'Author'
         });
     })
@@ -153,7 +156,7 @@ const npmInit = function () {
             options.author = value;
         }
         
-        return window.showInputBox({
+        return Window.showInputBox({
             prompt: 'License',
             value: 'ISC'
         });
@@ -165,16 +168,16 @@ const npmInit = function () {
         }
         
         const packageJson = JSON.stringify(options, null, 4);
-        const path = Path.join(workspace.rootPath, 'package.json');
+        const path = Path.join(Workspace.rootPath, 'package.json');
         Fs.writeFile(path, packageJson, (err) => {
             
             if (err) {
-                window.showErrorMessage('Cannot write \'package.json\'');    
+                Window.showErrorMessage('Cannot write \'package.json\'');    
             }
             else {
-                window.showInformationMessage('\'package.json\' created successfuly');
-                workspace.openTextDocument(path).then((document) => {
-                    window.showTextDocument(document);
+                Window.showInformationMessage('\'package.json\' created successfuly');
+                Workspace.openTextDocument(path).then((document) => {
+                    Window.showTextDocument(document);
                 });
             }
         })
@@ -188,7 +191,7 @@ const npmRunScript = function () {
         return;
     }
     
-    window.showQuickPick(Object.keys(scripts)).then((value) => {
+    Window.showQuickPick(Object.keys(scripts)).then((value) => {
         
         runCommand(['run', value]);
     });
@@ -222,14 +225,14 @@ const _installPackage = function (dev) {
         return;
     }
     
-    window.showInputBox({
+    Window.showInputBox({
         prompt: 'Package to install',
         placeHolder: 'lodash, underscore, ...'
     })
-    .then(value => {
+    .then((value) => {
         
         if (!value) {
-            window.showErrorMessage('No value entered');
+            Window.showErrorMessage('No value entered');
             return;
         }
         
@@ -264,7 +267,7 @@ const runCommand = function (args) {
     
     const cmd = 'npm ' + args.join(' ');
     const child = Cp.exec(cmd, {
-        cwd: workspace.rootPath,
+        cwd: Workspace.rootPath,
         env: process.env
     });
     
@@ -272,7 +275,7 @@ const runCommand = function (args) {
        
         if (code === 0) {
             outputChannel.appendLine('');
-            outputChannel.appendLine('-----------------')
+            outputChannel.appendLine('--------------------')
             outputChannel.appendLine('');
             outputChannel.hide();
         } 
