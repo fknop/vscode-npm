@@ -1,0 +1,51 @@
+{
+	"name": "vscode-npm",
+	"displayName": "npm",
+	"description": "npm commands for VSCode",
+	"version": "0.0.1",
+	"publisher": "fknop",
+	"engines": {
+		"vscode": "^0.10.1"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:npm-script.installSavedPackages",
+        "onCommand:npm-script.installPackage",
+        "onCommand:npm-script.installPackageDev",
+        "onCommand:npm-script.runScript"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"commands": [
+            {
+                "command": "npm-script.installSavedPackages",
+                "title": "Install saved packages",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.installPackage",
+                "title": "Install and save dependency",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.installPackageDev",
+                "title": "Install and save dev. dependency",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.runScript",
+                "title": "Run npm script",
+                "category": "npm"
+            }
+    ]},
+	"scripts": {
+		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+	},
+	"devDependencies": {
+		"typescript": "^1.6.2",
+		"vscode": "0.10.x"
+	}
+}
