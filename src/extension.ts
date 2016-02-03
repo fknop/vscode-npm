@@ -9,12 +9,12 @@ const outputChannel: OutputChannel = window.createOutputChannel('npm');
 
 export function activate(context: ExtensionContext) {
 
-	const disposables = [
+    const disposables = [
         commands.registerCommand('npm-script.installSavedPackages', npmInstallSavedPackages),  
         commands.registerCommand('npm-script.installPackage', npmInstallPackage),
         commands.registerCommand('npm-script.installPackageDev', npmInstallPackageDev),
         commands.registerCommand('npm-script.runScript', npmRunScript),
-        commands.registerCommand('npm-script.init', npmInit)
+        commands.registerCommand('npm-script.init', npmInit)    
     ];
     
 	context.subscriptions.push(...disposables, outputChannel);
@@ -52,9 +52,14 @@ const packageExists = function () {
         return false;
     }
 
-    const filename = Path.join(workspace.rootPath, 'package.json');
-    const stat = Fs.statSync(filename);
-    return stat && stat.isFile();
+    try {
+        const filename = Path.join(workspace.rootPath, 'package.json');
+        const stat = Fs.statSync(filename);
+        return stat && stat.isFile();
+    }
+    catch (ignored) {
+        return false;
+    }
 };
 
 const npmInit = function () {
@@ -64,10 +69,10 @@ const npmInit = function () {
         return;
     }
   
-    // if (packageExists()) {
-    //     window.showErrorMessage('\'package.json\' already exists');
-    //     return;
-    // }  
+    if (packageExists()) {
+        window.showErrorMessage('\'package.json\' already exists');
+        return;
+    }  
     
     const directory = Path.basename(workspace.rootPath);
    
@@ -266,12 +271,15 @@ const runCommand = function (args) {
     child.on('exit', (code, signal) => {
        
         if (code === 0) {
+            outputChannel.appendLine('');
+            outputChannel.appendLine('-----------------')
+            outputChannel.appendLine('');
             outputChannel.hide();
         } 
     });
     
     outputChannel.appendLine(cmd);
-    outputChannel.appendLine('...');
+    outputChannel.appendLine('');
     
     const append = function (data) { 
         
