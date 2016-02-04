@@ -13,6 +13,8 @@ More commands will come.
 * `npm deprecate <pkg>[@version] message` (experimental)
 * `npm run <script>`
 
+Not happy with the available commands ? No problem, raw command is also available. Enter any npm command you want.
+
 ## TODO
 
 * `npm update`

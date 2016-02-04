@@ -4,7 +4,7 @@ import { workspace as Workspace, ViewColumn } from 'vscode';
 import { outputChannel } from './output';
 
 
-export function runCommand(args) {
+export function runCommand (args: string[]) {
     
     const cmd = 'npm ' + args.join(' ');
     const child = Cp.exec(cmd, {

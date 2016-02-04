@@ -10,6 +10,7 @@ import { npmInstallPackage, npmInstallPackageDev, npmInstallSavedPackages } from
 import { npmUninstallPackage, npmUninstallPackageDev } from './uninstall';
 import { npmPublish } from './publish';
 import { npmDeprecate } from './deprecate';
+import { npmRawCommand } from './raw';
 
 export const activate = function (context: ExtensionContext) {
 
@@ -22,7 +23,8 @@ export const activate = function (context: ExtensionContext) {
         Commands.registerCommand('npm-script.uninstallPackage', npmUninstallPackage),
         Commands.registerCommand('npm-script.uninstallPackageDev', npmUninstallPackageDev),
         Commands.registerCommand('npm-script.publish', npmPublish),
-        Commands.registerCommand('npm-script.deprecate', npmDeprecate)
+        Commands.registerCommand('npm-script.deprecate', npmDeprecate),
+        Commands.registerCommand('npm-script.raw', npmRawCommand)
     ];
     
 	context.subscriptions.push(...disposables, outputChannel);

@@ -2,7 +2,7 @@
 	"name": "vscode-npm",
 	"displayName": "npm",
 	"description": "npm commands for VSCode",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"publisher": "fknop",
     "icon": "npm_icon.png",
 	"engines": {
@@ -20,7 +20,8 @@
         "onCommand:npm-script.uninstallPackage",
         "onCommand:npm-script.uninstallPackageDev",
         "onCommand:npm-script.publish",
-        "onCommand:npm-script.deprecate"
+        "onCommand:npm-script.deprecate",
+        "onCommand:npm-script.raw"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -68,6 +69,11 @@
             {
                 "command": "npm-script.deprecate",
                 "title": "Deprecate package",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.raw",
+                "title": "Raw npm command",
                 "category": "npm"
             }
     ]},
