@@ -6,27 +6,17 @@ import * as Messages from './messages';
 import { runCommand } from './run-command';
 
 
-export function npmInstallSavedPackages () {
-    
-    if (!packageExists()) {
-        Messages.noPackageError();
-        return;
-    }
-    
-    runCommand(['install']); 
+export function npmUninstallPackage () {
+
+    return _uninstallPackage(false);
 };
 
-export function npmInstallPackage () {
-
-    return _installPackage(false);
-};
-
-export function npmInstallPackageDev () {
+export function npmUninstallPackageDev () {
     
-    return _installPackage(true);
+    return _uninstallPackage(true);
 };
 
-const _installPackage = function (dev) {
+const _uninstallPackage = function (dev) {
     
     if (!packageExists()) {
         Messages.noPackageError();
@@ -34,7 +24,7 @@ const _installPackage = function (dev) {
     }
     
     Window.showInputBox({
-        prompt: 'Package to install',
+        prompt: 'Package to uninstall',
         placeHolder: 'lodash, underscore, ...'
     })
     .then((value) => {
@@ -58,7 +48,7 @@ const _installPackage = function (dev) {
                   value === '--save-exact'
         });
         
-        const args = ['install', ...packages];
+        const args = ['uninstall', ...packages];
         
         if (hasSaveOption) {
             runCommand(args);

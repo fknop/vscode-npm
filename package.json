@@ -15,7 +15,9 @@
         "onCommand:npm-script.installPackage",
         "onCommand:npm-script.installPackageDev",
         "onCommand:npm-script.runScript",
-        "onCommand:npm-script.init"
+        "onCommand:npm-script.init",
+        "onCommand:npm-script.uninstallPackage",
+        "onCommand:npm-script.uninstallPackageDev"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -43,6 +45,16 @@
             {
                 "command": "npm-script.init",
                 "title": "Initialize npm package",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.uninstallPackage",
+                "title": "Uninstall dependency",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.uninstallPackageDev",
+                "title": "Uninstall dev. dependency",
                 "category": "npm"
             }
     ]},
