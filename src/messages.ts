@@ -37,7 +37,13 @@ export function createdInfo () {
 };
 
 
-export function noValue () {
+export function noValueError () {
 
     Window.showErrorMessage('No value entered');  
+};
+
+
+export function invalidTagError () {
+    
+    Window.showErrorMessage('Tag is invalid');
 };

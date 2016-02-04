@@ -30,7 +30,7 @@ const _uninstallPackage = function (dev) {
     .then((value) => {
         
         if (!value) {
-            Messages.noValue();
+            Messages.noValueError();
             return;
         }
         

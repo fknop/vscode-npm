@@ -17,7 +17,9 @@
         "onCommand:npm-script.runScript",
         "onCommand:npm-script.init",
         "onCommand:npm-script.uninstallPackage",
-        "onCommand:npm-script.uninstallPackageDev"
+        "onCommand:npm-script.uninstallPackageDev",
+        "onCommand:npm-script.publish",
+        "onCommand:npm-script.deprecate"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -55,6 +57,16 @@
             {
                 "command": "npm-script.uninstallPackageDev",
                 "title": "Uninstall dev. dependency",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.publish",
+                "title": "Publish package",
+                "category": "npm"
+            },
+            {
+                "command": "npm-script.deprecate",
+                "title": "Deprecate package",
                 "category": "npm"
             }
     ]},

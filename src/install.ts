@@ -40,7 +40,7 @@ const _installPackage = function (dev) {
     .then((value) => {
         
         if (!value) {
-            Messages.noValue();
+            Messages.noValueError();
             return;
         }
         
