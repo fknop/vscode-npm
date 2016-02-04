@@ -2,8 +2,9 @@
 	"name": "vscode-npm",
 	"displayName": "npm",
 	"description": "npm commands for VSCode",
-	"version": "0.0.2",
+	"version": "1.0.0",
 	"publisher": "fknop",
+    "icon": "npm_icon.png",
 	"engines": {
 		"vscode": "^0.10.1"
 	},
