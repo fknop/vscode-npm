@@ -22,4 +22,4 @@ Not happy with the available commands ? No problem, raw command is also availabl
 
 ## Contribute
 
-Report a bug or a suggestion by posting an issue on the git repository.
+Report a bug or a suggestion by posting an issue on the git repository (https://github.com/fknop/vscode-npm).
