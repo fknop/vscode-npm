@@ -15,10 +15,14 @@ More commands will come.
 
 Not happy with the available commands ? No problem, raw command is also available. Enter any npm command you want.
 
-## TODO
+## Terminate a script
 
-* `npm update`
-* ... (suggestions?)
+You can terminate a script with the `terminate` command. It uses the `tree-kill` module that you can find on `npm`.
+It has different behaviors on Unix or Windows. 
+
+I have only tried it for `Windows` so it would be nice to have `Unix` users feedback, thanks.
+
+Thanks to `stkb` for his suggestion. https://github.com/fknop/vscode-npm/issues/1
 
 ## Contribute
 
