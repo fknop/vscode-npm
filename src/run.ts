@@ -2,7 +2,7 @@ import * as Path from 'path';
 import * as Fs from 'fs';
 
 import { workspace as Workspace,
-         window as Window } from 'vscode';
+         window as Window, QuickPickItem } from 'vscode';
 
 import * as Messages from './messages';
 import { runCommand } from './run-command';
@@ -14,9 +14,14 @@ export default function () {
         return;
     }
     
-    Window.showQuickPick(Object.keys(scripts)).then((value) => {
+    const items: QuickPickItem[] = Object.keys(scripts).map((key) => {
         
-        runCommand(['run', value]);
+        return { label: key, description: scripts[key] };
+    });
+    
+    Window.showQuickPick(items).then((value) => {
+        
+        runCommand(['run', value.label]);
     });
 };
 
