@@ -16,6 +16,9 @@ export function terminate (pid) {
     
     const childCommand = childs.get(pid);
     if (childCommand.child) {
+        outputChannel.appendLine('');
+        outputChannel.appendLine(`Killing process: ${childCommand.cmd} (pid:${pid})`);
+        outputChannel.appendLine('');
         kill(pid, 'SIGTERM');
     }
 }
