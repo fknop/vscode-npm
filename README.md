@@ -9,11 +9,14 @@ More commands will come.
 * `npm install <pkg> --save-dev`
 * `npm uninstall <pkg> --save`
 * `npm uninstall <pkg> --save-dev`
+* `npm start`
+* `npm test`
 * `npm publish [tag]`
 * `npm deprecate <pkg>[@version] message` (experimental)
 * `npm run <script>`
 
 Not happy with the available commands ? No problem, raw command is also available. Enter any npm command you want.
+
 
 ## Run last executed script
 
