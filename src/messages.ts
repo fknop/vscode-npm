@@ -18,9 +18,19 @@ export function noProjectOpenError () {
     Window.showErrorMessage('No project open');
 };
 
-export function noLastScript() {
+export function noLastScript () {
     
     Window.showErrorMessage('No script executed yet')
+}
+
+export function noTestScript () {
+    
+    Window.showErrorMessage('No test script in your package.json file');
+}
+
+export function noStartScript () {
+    
+    Window.showErrorMessage('No start script in your package.json file');
 }
 
 export function noScriptsInfo () {

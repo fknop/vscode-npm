@@ -2,7 +2,7 @@
   "name": "vscode-npm",
   "displayName": "npm",
   "description": "npm commands for VSCode",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "publisher": "fknop",
   "icon": "npm_icon.png",
   "engines": {
@@ -23,11 +23,23 @@
     "onCommand:npm-script.publish",
     "onCommand:npm-script.deprecate",
     "onCommand:npm-script.raw",
-    "onCommand:npm-script.terminate"
+    "onCommand:npm-script.terminate",
+    "onCommand:npm-script.start",
+    "onCommand:npm-script.test"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "commands": [
+      {
+        "command": "npm-script.start",
+        "title": "npm start",
+        "category": "npm"
+      },
+      {
+        "command": "npm-script.test",
+        "title": "npm test",
+        "category": "npm"
+      },
       {
         "command": "npm-script.terminate",
         "title": "Terminate running npm script",

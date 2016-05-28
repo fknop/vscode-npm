@@ -7,7 +7,7 @@ import { workspace as Workspace,
 import * as Messages from './messages';
 import { runCommand } from './run-command';
 
-var lastScript:QuickPickItem;
+let lastScript: string;
 
 export function npmRunScript () {
     
@@ -22,16 +22,51 @@ export function npmRunScript () {
     });
     
     Window.showQuickPick(items).then((value) => {
-        lastScript = value;
+        lastScript = value.label;
         runCommand(['run', value.label]);
     });
 };
 
-export function  npmReRunScript() {
-    if(lastScript)
-        runCommand(['run', lastScript.label]);
-    else 
+export function npmTest () {
+    
+    const scripts = readScripts();
+    if (!scripts) {
+        return;
+    }
+    
+    if (!scripts.test) {
+        Messages.noTestScript();
+        return;
+    }
+    
+    lastScript = 'test';
+    runCommand(['run', 'test']);
+}
+
+export function npmStart () {
+    
+    const scripts = readScripts();
+    if (!scripts) {
+        return;
+    }
+    
+    if (!scripts.start) {
+        Messages.noStartScript();
+        return;
+    }
+    
+    lastScript = 'start';
+    runCommand(['run', 'start']);
+}
+
+export function npmRunLastScript () {
+    
+    if(lastScript) {
+        runCommand(['run', lastScript]);
+    }
+    else {
         Messages.noLastScript();
+    }
 }
 
 const readScripts = function () {

@@ -7,7 +7,7 @@ import { runCommand } from './run-command';
 import npmInit from './init';
 import { npmInstallPackage, npmInstallPackageDev, npmInstallSavedPackages } from './install';
 import { npmUninstallPackage, npmUninstallPackageDev } from './uninstall';
-import {npmRunScript, npmReRunScript} from './run';
+import { npmRunScript, npmRunLastScript, npmStart, npmTest } from './run';
 import { npmPublish } from './publish';
 import { npmDeprecate } from './deprecate';
 import { npmRawCommand } from './raw';
@@ -20,14 +20,16 @@ export const activate = function (context: ExtensionContext) {
         Commands.registerCommand('npm-script.installPackage', npmInstallPackage),
         Commands.registerCommand('npm-script.installPackageDev', npmInstallPackageDev),
         Commands.registerCommand('npm-script.runScript', npmRunScript),
-        Commands.registerCommand('npm-script.reRunScript', npmReRunScript),
+        Commands.registerCommand('npm-script.reRunScript', npmRunLastScript),
         Commands.registerCommand('npm-script.init', npmInit),
         Commands.registerCommand('npm-script.uninstallPackage', npmUninstallPackage),
         Commands.registerCommand('npm-script.uninstallPackageDev', npmUninstallPackageDev),
         Commands.registerCommand('npm-script.publish', npmPublish),
         Commands.registerCommand('npm-script.deprecate', npmDeprecate),
         Commands.registerCommand('npm-script.raw', npmRawCommand),
-        Commands.registerCommand('npm-script.terminate', npmTerminate)
+        Commands.registerCommand('npm-script.terminate', npmTerminate),
+        Commands.registerCommand('npm-script.test', npmTest),
+        Commands.registerCommand('npm-script.start', npmStart)
     ];
     
 	context.subscriptions.push(...disposables, outputChannel);

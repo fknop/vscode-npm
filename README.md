@@ -15,6 +15,10 @@ More commands will come.
 
 Not happy with the available commands ? No problem, raw command is also available. Enter any npm command you want.
 
+## Run last executed script
+
+You can also run the last executed script by typing `npm run last...`. Thanks to: [#4](https://github.com/fknop/vscode-npm/pull/4)
+
 ## Terminate a script
 
 You can terminate a script with the `terminate` command. It uses the `tree-kill` module that you can find on `npm`.
