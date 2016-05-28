@@ -7,7 +7,8 @@ const kill = require('tree-kill');
 
 export interface ChildCommand {
     child: ChildProcess,
-    cmd: string
+    cmd: string,
+    killedByUs?: boolean
 }
 
 export const childs: Map<number, ChildCommand> = new Map();
@@ -19,6 +20,7 @@ export function terminate (pid) {
         outputChannel.appendLine('');
         outputChannel.appendLine(`Killing process: ${childCommand.cmd} (pid:${pid})`);
         outputChannel.appendLine('');
+        childCommand.killedByUs = true;
         kill(pid, 'SIGTERM');
     }
 }
@@ -38,12 +40,9 @@ export function runCommand (args: string[]) {
     
     child.on('exit', (code, signal) => {
         
-        childs.delete(child.pid);
-        
-        
-        if (signal === 'SIGTERM') {
+        if (signal === 'SIGTERM' || childs.get(child.pid).killedByUs) {
             outputChannel.appendLine('');
-            outputChannel.appendLine('Successfuly killed process');
+            outputChannel.appendLine('Successfully killed process');
             outputChannel.appendLine('');
             outputChannel.appendLine('--------------------')
             outputChannel.appendLine('');
@@ -55,6 +54,8 @@ export function runCommand (args: string[]) {
             outputChannel.appendLine('');
             outputChannel.hide();
         } 
+        
+        childs.delete(child.pid);
     });
     
     outputChannel.appendLine(cmd);
