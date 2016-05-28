@@ -7,7 +7,9 @@ import { workspace as Workspace,
 import * as Messages from './messages';
 import { runCommand } from './run-command';
 
-export default function () {
+var lastScript:QuickPickItem;
+
+export function npmRunScript () {
     
     const scripts = readScripts();
     if (!scripts) {
@@ -20,10 +22,17 @@ export default function () {
     });
     
     Window.showQuickPick(items).then((value) => {
-        
+        lastScript = value;
         runCommand(['run', value.label]);
     });
 };
+
+export function  npmReRunScript() {
+    if(lastScript)
+        runCommand(['run', lastScript.label]);
+    else 
+        Messages.noLastScript();
+}
 
 const readScripts = function () {
   
