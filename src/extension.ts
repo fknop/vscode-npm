@@ -20,7 +20,7 @@ export const activate = function (context: ExtensionContext) {
         Commands.registerCommand('npm-script.installPackage', npmInstallPackage),
         Commands.registerCommand('npm-script.installPackageDev', npmInstallPackageDev),
         Commands.registerCommand('npm-script.runScript', npmRunScript),
-        Commands.registerCommand('npm-script.reRunScript', npmRunLastScript),
+        Commands.registerCommand('npm-script.runScriptLatest', npmRunLastScript),
         Commands.registerCommand('npm-script.init', npmInit),
         Commands.registerCommand('npm-script.uninstallPackage', npmUninstallPackage),
         Commands.registerCommand('npm-script.uninstallPackageDev', npmUninstallPackageDev),

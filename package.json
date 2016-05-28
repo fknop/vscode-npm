@@ -2,7 +2,7 @@
   "name": "vscode-npm",
   "displayName": "npm",
   "description": "npm commands for VSCode",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "publisher": "fknop",
   "icon": "npm_icon.png",
   "engines": {
@@ -16,7 +16,7 @@
     "onCommand:npm-script.installPackage",
     "onCommand:npm-script.installPackageDev",
     "onCommand:npm-script.runScript",
-    "onCommand:npm-script.reRunScript",
+    "onCommand:npm-script.runScriptLatest",
     "onCommand:npm-script.init",
     "onCommand:npm-script.uninstallPackage",
     "onCommand:npm-script.uninstallPackageDev",
@@ -66,7 +66,7 @@
         "category": "npm"
       },
       {
-        "command": "npm-script.reRunScript",
+        "command": "npm-script.runScriptLatest",
         "title": "Run last npm script",
         "category": "npm"
       },
