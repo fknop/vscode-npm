@@ -18,6 +18,10 @@ export function noProjectOpenError () {
     Window.showErrorMessage('No project open');
 };
 
+export function noLastScript() {
+    
+    Window.showErrorMessage('No script executed yet')
+}
 
 export function noScriptsInfo () {
     

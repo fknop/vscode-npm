@@ -16,6 +16,7 @@
     "onCommand:npm-script.installPackage",
     "onCommand:npm-script.installPackageDev",
     "onCommand:npm-script.runScript",
+    "onCommand:npm-script.reRunScript",
     "onCommand:npm-script.init",
     "onCommand:npm-script.uninstallPackage",
     "onCommand:npm-script.uninstallPackageDev",
@@ -50,6 +51,11 @@
       {
         "command": "npm-script.runScript",
         "title": "Run npm script",
+        "category": "npm"
+      },
+      {
+        "command": "npm-script.reRunScript",
+        "title": "Run last npm script",
         "category": "npm"
       },
       {
