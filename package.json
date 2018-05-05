@@ -62,7 +62,7 @@
       },
       {
         "command": "npm-script.runScript",
-        "title": "Run  npm script",
+        "title": "Run npm script",
         "category": "npm"
       },
       {
