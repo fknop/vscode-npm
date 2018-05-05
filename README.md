@@ -33,4 +33,4 @@ Thanks to `stkb` for his suggestion. https://github.com/fknop/vscode-npm/issues/
 
 ## Contribute
 
-Report a bug or a suggestion by posting an issue on the git repository (https://github.com/fknop/vscode-npm).
+Report a bug or a suggestion by posting an issue on the [git repository](https://github.com/fknop/vscode-npm).
